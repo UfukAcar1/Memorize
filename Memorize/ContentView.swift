@@ -10,10 +10,10 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         HStack{
-            CardView()
-            CardView()
-            CardView()
-            CardView()
+            let emojis: [String] = [ "👻","🎃","🧙🏼","🐈‍⬛","😈"]
+            ForEach(emojis.indices, id: \.self){ index in
+                CardView(content:emojis[index])
+            }
         }
         .imageScale(.large)
         .foregroundColor(.orange)
@@ -22,8 +22,9 @@ struct ContentView: View {
 }
 
 struct CardView: View{
+    let content: String
     //@State basically creates a pointer. Look at that later on
-    @State var isFaceUp = false
+    @State var isFaceUp = true
     
     var body: some View{
         ZStack{
@@ -33,7 +34,7 @@ struct CardView: View{
             if isFaceUp{
                 base.foregroundColor(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text("👻").font(.largeTitle)
+                Text(content).font(.largeTitle)
             }else{
                 base.fill()
             }
