@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         HStack{
-            CardView(isFaceUp: true)
+            CardView()
             CardView()
             CardView()
             CardView()
@@ -22,21 +22,28 @@ struct ContentView: View {
 }
 
 struct CardView: View{
-    var isFaceUp: Bool = false
+    //@State basically creates a pointer. Look at that later on
+    @State var isFaceUp = false
     
     var body: some View{
-        ZStack(content:
-            {
+        ZStack{
+            //since we're keep using RoundedRectangle(cornerRadius: 12) 3 times we can create a local
+            //variable named as base
+            let base: RoundedRectangle = RoundedRectangle(cornerRadius: 12)
             if isFaceUp{
-                RoundedRectangle(cornerRadius: 12).foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 12).strokeBorder(lineWidth: 2)
+                base.foregroundColor(.white)
+                base.strokeBorder(lineWidth: 2)
                 Text("👻").font(.largeTitle)
             }else{
-                RoundedRectangle(cornerRadius: 12)
+                base.fill()
             }
-            
-            }
-        )
+        }
+        
+        .onTapGesture{
+            //we can use toggle instead of this line of code it is the same logic.
+            //isFaceUp = !isFaceUp
+            isFaceUp.toggle()
+        }
     }
 }
 
